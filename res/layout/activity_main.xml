@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#270D2A"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/title"
+ 		android:layout_width="wrap_content" 
+ 		android:layout_height="wrap_content" 
+ 		android:text="紫外线等级|曝晒指数"
+ 		android:textColor="#ffffff" 
+ 		android:textSize="16sp" 
+ 		android:layout_centerHorizontal="true"/>
+    
+    <ImageView
+        android:id="@+id/show"
+        android:layout_width="210dp" 
+        android:layout_height="wrap_content"
+        android:src="@drawable/unknown" 
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/data"
+ 		android:layout_width="wrap_content" 
+ 		android:layout_height="wrap_content" 
+ 		android:textColor="#ffffff" 
+ 		android:textSize="15sp" 
+ 		android:layout_centerHorizontal="true"/>
+    
+    <TextView
+        android:id="@+id/data2"
+ 		android:layout_width="wrap_content" 
+ 		android:layout_height="wrap_content" 
+ 		android:textColor="#ffffff" 
+ 		android:textSize="15sp" 
+ 		android:layout_centerHorizontal="true"/>
+        
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Created by Shine.Hua 2017-04-18"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#ffffff"
+        android:textSize="10sp"
+        android:textStyle="italic"
+        android:typeface="sans" />
+    
+</LinearLayout>
