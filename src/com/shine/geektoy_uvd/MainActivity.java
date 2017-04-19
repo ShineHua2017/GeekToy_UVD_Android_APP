@@ -23,7 +23,8 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	private TextView info, info2;
+	private TextView info;
+	//private TextView info2;
 	private final int VendorID = 5824;
 	private final int ProductID = 1503;
 	private UsbManager myUsbManager;
@@ -41,30 +42,30 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		info = (TextView) findViewById(R.id.data);
-		// info2 = (TextView) findViewById(R.id.data2);
+	    //info2 = (TextView) findViewById(R.id.data2);
 		myUsbManager = (UsbManager) getSystemService(USB_SERVICE);
 		final ImageView show = (ImageView) findViewById(R.id.show);
 		if (enumerateDevice() != false) {
 			if (findInterface() != false) {
 				openDevice();
-				if (status.equals("low")) {
+				if (status.contains("low")) {
 					show.setImageResource(imageIds[1]);
-				} else if (status.equals("moderate")) {
+				} else if (status.contains("moderate")) {
 					show.setImageResource(imageIds[2]);
-				} else if (status.equals("high")) {
+				} else if ((status.contains("high"))&&(!status.contains("very"))) {
 					show.setImageResource(imageIds[3]);
-				} else if (status.equals("veryhigh")) {
+				} else if (status.contains("veryhigh")) {
 					show.setImageResource(imageIds[4]);
-				} else if (status.equals("extreme")) {
-					show.setImageResource(imageIds[4]);
+				} else if (status.contains("extreme")) {
+					show.setImageResource(imageIds[5]);
 				} else {
 					show.setImageResource(imageIds[0]);
 				}
 			} else {
-				info.setText("UVDÎ´Á¬½Ó");
+				info.setText("UVDæœªè¿æ¥");
 			}
 		} else {
-			info.setText("UVDÎ´Á¬½Ó");
+			info.setText("UVDæœªè¿æ¥");
 		}
 
 	}
@@ -98,7 +99,7 @@ public class MainActivity extends Activity {
 						&& intf.getInterfaceProtocol() == 0) {
 					myInterface = intf;
 					return true;
-					// showTmsg("È¡µÃ¶ËµãĞÅÏ¢:" +
+					// showTmsg("å–å¾—ç«¯ç‚¹ä¿¡æ¯:" +
 					// myInterface.getEndpoint(0).toString());
 				}
 			}
@@ -120,10 +121,10 @@ public class MainActivity extends Activity {
 			}
 
 			if (conn.claimInterface(myInterface, true)) {
-				ByteBuffer getbuf = ByteBuffer.allocate(40);
-				CharBuffer getchar = CharBuffer.allocate(40);
+				ByteBuffer getbuf = ByteBuffer.allocate(80);
+				CharBuffer getchar = CharBuffer.allocate(80);
 				myDeviceConnection = conn;
-				// showTmsg("´ò¿ªÉè±¸³É¹¦");
+				// showTmsg("æ‰“å¼€è®¾å¤‡æˆåŠŸ");
 				byte[] buffer = new byte[1];
 				byte[] getvalue = new byte[1];
 				boolean jsvalue = false;
@@ -137,7 +138,7 @@ public class MainActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				for (int i = 0; i < 40; i++) {
+				for (int i = 0; i < 80; i++) {
 					myDeviceConnection.controlTransfer(0xA0, 0x01, 0x0000,
 							0x0000, getvalue, getvalue.length, 1000);
 					if (getvalue[0] == 123) {
@@ -154,13 +155,12 @@ public class MainActivity extends Activity {
 				}
 				conn.close();
 				conn.releaseInterface(myInterface);
-
 				Charset cs = Charset.forName("UTF-8");
 				getchar = cs.decode(getbuf);
-				// info2.setText(getchar.toString());
+			    //info2.setText(getchar.toString());
 				try {
 					JSONObject myJsonObject = new JSONObject(getchar.toString());
-					info.setText("ÊµÊ±Êı¾İ£º" + myJsonObject.getString("real_data"));
+					info.setText("å®æ—¶æ•°æ®ï¼š" + myJsonObject.getString("real_data"));
 					status = myJsonObject.getString("exposure_level");
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
